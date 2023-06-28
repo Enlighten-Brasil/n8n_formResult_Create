@@ -3,17 +3,24 @@
 ## Automação n8n para responder formulário EnSpace em lote.
 
 ### Como usar
-1. Baixe o [n8n](https://drive.google.com/file/d/1wEh4zD1b4WhE-fZurRlPBQOLXHT8STGB/view?usp=drive_link) e extraia o arquivo. (Pule para o passo 3 caso já tenha o n8n)
-2. Acesse a pasta e execute o arquivo `n8n.exe` aguarde iniciar.
-3. Copie este repositório e cole na pasta `data` em seu n8n. (Mantenha o nome da pasta)
-4. Na pasta Input, coloque o arquivo `.xlsx` com os dados dos formulários a serem respondidos. 
-5. Renomeie o arquivo `config.json.example` para `config.json`.
-6. Preencha o arquivo `config.json` com os dados necessários.
-7. Abra o n8n e importe o arquivo `workflow.json` para o seu n8n.
-8. Execute o workflow.
-9. Ao final, na pasta Output será gerado um arquivo `.xlsx` com a relação de formulários respondidos.
+1. Baixe o [n8n](https://drive.google.com/file/d/1wEh4zD1b4WhE-fZurRlPBQOLXHT8STGB/view?usp=drive_link) (Pule para o passo 4 caso já tenha o n8n)
+2. Extraia o arquivo baixado em uma pasta de sua preferência. [Extrair aquivos Windows 11](https://conectandonet.com.br/blog/como-extrair-arquivos-rar-no-windows-11/)
+3. Acesse a pasta criada e execute o arquivo `n8n.exe`. (Aguarde a inicialização do n8n)
+4. Baixe este [repositório](https://github.com/Enlighten-Brasil/n8n_formResult_Create/archive/refs/heads/main.zip) e extraia o conteúdo na pasta `data` do n8n. (Ex. `n8n\data\n8n_formResult_Create-main`)
+5. Crie um Workflow em branco no n8n.
+6. No canto superior direito, clique nos 3 pontinhos e selecione a opção `Import From File` e selecione o arquivo `workflow.json` na pasta `n8n_formResult_Create-main`.
+7. Clique no botão `Save` no canto superior direito.
+8. Leia as instruções abaixo para entender como preencher os arquivo `config.json` e o input a ser usado `.xlsx`.
+9. Renomeie o arquivo `config.json.example` para `config.json`.
+10. Preencha o arquivo `config.json` com os dados necessários.
+11. Na pasta `Input`, coloque o arquivo `.xlsx` com os dados a serem enviados usando o nome configurado `inputFilePath` em `config.json`.
+12. Clique no botão `Execute Workflow` no centro inferior da tela.
+13. Aguarde a execução do Workflow.
+14. Se tudo ocorrer bem, um arquivo `.xlsx` será gerado na pasta `Output` com o resultado.
 
-### Detalhes do arquivo `config.json`
+## Instruções
+
+### Arquivo `config.json`
 - `apiUrl`: URL da API EnSpace. (Ex: `https://api.stage.enspace.io`).
   - (Produção) `https://api.enspace.io`
   - (Stage) `https://api.stage.enspace.io`
@@ -37,6 +44,19 @@
 - `MM/dd/yyyy`: 01/30/2021
 - `yyyy-MM-dd`: 2021-01-30
 - `dd/MM/yyyy HH:mm:ss`: 30/01/2021 00:00:00
+
+#### Exemplo de arquivo `config.json`
+```json
+{
+  "apiUrl": "https://api.stage.enspace.io",
+  "inputFilePath": "input.xlsx",
+  "inputUniqueKey": "id",
+  "form_id": "5f9b1b3b9c6b4e0001c3b2b0",
+  "request_email": "exemplo@exemplo.com",
+  "inputDateFormat": "dd/MM/yyyy"
+}
+```
+---
 
 ### Tipos de campos suportados e formato de entrada
 - Texto, Texto longo
@@ -84,21 +104,9 @@
 - Documento (OnlyOffice) - `*Não suportado`
   - *Não suportado: Sem previsão de suporte
 
+## Exemplos 
 
-### Exemplo de arquivo `config.json`
-```json
-{
-  "apiUrl": "https://api.stage.enspace.io",
-  "inputFilePath": "input.xlsx",
-  "inputUniqueKey": "id",
-  "form_id": "5f9b1b3b9c6b4e0001c3b2b0",
-  "request_email": "exemplo@exemplo.com",
-  "inputDateFormat": "dd/MM/yyyy"
-}
-```
-
-### Exemplo de formulário EnSpace
-### Campos
+### Configuração dos campos usados no exemplo
 - Nome (ref: `nome`): Texto
 - Registro (ref: `registro`)  : Calendário
 - Salário (ref: `salario`)  : Número
