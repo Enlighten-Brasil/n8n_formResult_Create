@@ -1,0 +1,494 @@
+{
+  "name": "n8n_formResult_Create",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "3b7046ec-f29e-403e-8124-98546336c1ed",
+      "name": "Executar Fluxo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field\n// called 'myNewField' to the JSON of each one\nlet results = [],\ni = 0;\n\ndo {\n  try {\n    results = results.concat($(\"NoOp\").all(0, i));\n  } catch (error) {\n    results?.map((r) => {\n      delete r.json.group;\n      delete r.json.form;\n      delete r.json.user;\n      delete r.json.module;\n      delete r.json.data;\n      delete r.json.fixed;\n      delete r.json.c_mailbox_message;\n      delete r.json.data_privacy;\n      delete r.json.document;\n      delete r.json.document_generated;\n      delete r.json.question;\n      r.json.item = {reference: r.json.item.reference, data: r.json.item.data }\n      return r\n    })\n    return results;\n  }\n  i++;\n} while (true);\n\n\n"
+      },
+      "id": "f63d22d5-d2ad-4c4f-9f2b-a8e4cbd42099",
+      "name": "Tratamento da Resposta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        900,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "=./data/{{ $workflow.name }}/config.json"
+      },
+      "id": "c2dc3991-83f4-4fe8-b27b-ec5d5c57ecf0",
+      "name": "Carregar Config",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "=./data/{{ $workflow.name }}/input/{{ $('Configuração').item.json.inputFilePath }}",
+        "dataPropertyName": "=data"
+      },
+      "id": "9ab43394-8e17-4435-a190-a3fbdbc44098",
+      "name": "Carregar Input",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bcfa5906-a9ca-4021-979c-6ed466d4809b",
+      "name": "Configuração",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        180,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.apiUrl }}/c-forms/public/{{ $json.form_id }}",
+        "options": {}
+      },
+      "id": "0dddc19f-4b77-4329-9648-586e4af8d21a",
+      "name": "Formulário",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        420,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "unit": "seconds"
+      },
+      "id": "468656da-3b7a-4dcc-8366-e67827c03178",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        140
+      ],
+      "webhookId": "92abecb6-eda2-4596-9d2f-653c71e8635c"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Configuração').item.json.apiUrl }}/c-form-results/public",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=form",
+              "value": "={{ $('Configuração').item.json.form_id }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $('Configuração').item.json.request_email }}"
+            },
+            {
+              "name": "data",
+              "value": "={{ $json }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5c59fe1e-70e2-4e8f-9e73-081a50c9425b",
+      "name": "Envia Resposta",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        140,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toFile",
+        "options": {
+          "fileName": "Items_Cadastrados.xlsx",
+          "headerRow": true,
+          "sheetName": "={{ $workflow.name }}"
+        }
+      },
+      "id": "a32a636b-4f61-492d-91cb-834e243b5bc8",
+      "name": "Planilha de Saida",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "fileName": "=./data/{{ $workflow.name }}/output/{{ $now.toUnixInteger() }}_{{ $('Carregar Input').item.binary.data.fileName }}",
+        "options": {
+          "append": true
+        }
+      },
+      "id": "4da6aec4-e60e-4143-844b-500090174272",
+      "name": "Salva Saida",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": "1",
+        "options": {
+          "reset": false
+        }
+      },
+      "id": "846b5c7b-76e4-417c-8ffb-bc970c49df67",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $('Split In Batches').context.noItemsLeft }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "00f0c0eb-ddd7-4775-86b9-57e53208a7e2",
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        660,
+        140
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "0726d8a8-b7d4-4efe-9cf2-95a39513bb35",
+      "name": "NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        400,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const dateTypes = ['EnlCalendar', 'date', 'time', 'datetime-local']\nconst dateFields = []\nconst requiredFields = []\n\n\nfor (const item of $input.all()) {\n\n  for (const block of item.json.blocks) {\n    if (dateTypes.includes(block?.fieldConfig?.type))\n      dateFields.push(block.fieldConfig.refId)\n\n    if (block?.validation?.includes('required') || block?.fieldConfig?.validation?.includes('required'))\n        requiredFields.push(block.fieldConfig.refId)\n  }\n\n  item.json.dateFields = dateFields\n  item.json.requiredFields = requiredFields\n  \n}\n\nreturn $input.all();"
+      },
+      "id": "37655f1c-d9ea-41dc-907d-4bc4c32ca475",
+      "name": "Regras do Formulário",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\n// CHECK DATE FIELD CONVERT\nif ($('Regras do Formulário').first().json?.dateFields?.length) {\n  for (const item of $input.all()) {\n    for (const dField of $('Regras do Formulário').first().json.dateFields) {\n       if (item.json[dField]) {\n          const inputFormat = $('Configuração').first().json.inputDateFormat\n          item.json[dField] = DateTime.fromFormat(item.json[dField], inputFormat).toISO({includeOffset: false})\n       }\n    }\n  }\n \n}\n\nreturn $input.all().filter(i => i)"
+      },
+      "id": "9feea672-925c-4001-807c-7b5b0d5a1a0f",
+      "name": "Tratamento Entrada",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "headerRow": true
+        }
+      },
+      "id": "b40f37b4-6842-47d5-88fe-e7582b5c9198",
+      "name": "Ler Como Planilha",
+      "type": "n8n-nodes-base.spreadsheetFile",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "\nreturn $input.all().filter((i) => i.json[$('Configuração').first().json.inputUniqueKey]);"
+      },
+      "id": "271667f6-4baa-4204-8372-7664574fec82",
+      "name": "Remove Vazios",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "removeDuplicates",
+        "compare": "selectedFields",
+        "fieldsToCompare": {
+          "fields": [
+            {
+              "fieldName": "={{ $('Configuração').item.json.inputUniqueKey }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0a54b0c2-1d03-4b15-8bf4-10386a8348ff",
+      "name": "Remove Duplicados",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -100
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Executar Fluxo": {
+      "main": [
+        [
+          {
+            "node": "Carregar Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tratamento da Resposta": {
+      "main": [
+        [
+          {
+            "node": "Planilha de Saida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carregar Config": {
+      "main": [
+        [
+          {
+            "node": "Configuração",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carregar Input": {
+      "main": [
+        [
+          {
+            "node": "Ler Como Planilha",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configuração": {
+      "main": [
+        [
+          {
+            "node": "Formulário",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formulário": {
+      "main": [
+        [
+          {
+            "node": "Regras do Formulário",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Envia Resposta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Envia Resposta": {
+      "main": [
+        [
+          {
+            "node": "NoOp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Planilha de Saida": {
+      "main": [
+        [
+          {
+            "node": "Salva Saida",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Tratamento da Resposta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NoOp": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Regras do Formulário": {
+      "main": [
+        [
+          {
+            "node": "Carregar Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ler Como Planilha": {
+      "main": [
+        [
+          {
+            "node": "Remove Vazios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tratamento Entrada": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Vazios": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicados": {
+      "main": [
+        [
+          {
+            "node": "Tratamento Entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "fdfa6326-f38a-4f41-b333-fec36aebd0c6",
+  "id": "1",
+  "meta": {
+    "instanceId": "33c55fb288fb53971b39759207f90c8f479a8a5b1eff9cfacde5bcf4a60f1101"
+  },
+  "tags": []
+}

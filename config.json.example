@@ -1,0 +1,8 @@
+{
+  "apiUrl": "http://localhost:1337",
+  "inputFilePath": "gestao_de_contratos.xlsx",
+  "inputUniqueKey": "id",
+  "form_id": "6d797b90-207f-4b7e-b5ba-1030465ee7c3",
+  "request_email": "raul.domingues@be-enlighten.com",
+  "inputDateFormat": "dd/MM/yyyy"
+}
