@@ -82,24 +82,28 @@
 }
 ```
 
-### Exemplo de formulário
-![Formulário](https://i.imgur.com/6ZQZQ8X.png)
+### Exemplo de formulário EnSpace
 ### Campos
-- nome: Texto
-- registro: Calendário
-- salario: Número
-- Seleção: Seleção única
-- Relacionamento: Relacionamento
-- Relacionamento Multi: Relacionamento Multi
+- Nome (ref: `nome`): Texto
+- Registro (ref: `registro`)  : Calendário
+- Salário (ref: `salario`)  : Número
+- Tipo de documento (ref: `tipo_de_documento`)  : Seleção única
+  - CPF (value: `cpf`)
+  - CNPJ (value: `cnpj`)
+  - R.G. (value: `rg`)
+- Documento (ref: `documento`)  : Texto
+- Endereço (ref: `endereco`)  : Relacionamento
+- Telefones (ref: `telefones`)  : Relacionamento Multi
 
 ### Exemplo de arquivo `.xlsx`
-| id | nome | registro | salario | Seleção | Relacionamento | Relacionamento Multi
-| --- | --- | --- | --- | --- | --- | --- | 
-| 1 | João | 01/01/2021 | 123.45 | Opção 1 | EXEMPLO-1 | | 
-| 2 | Maria | 02/02/2021 | 456.78 | Opção 2 | EXEMPLO-2 | EXEMPLO-1, EXEMPLO-3 |
-| 3 | José | 03/03/2021 | 789.01 | Opção 3 | EXEMPLO-3 | |
-| 4 | Joana | 04/04/2021 | 012.34 | Opção 4 | EXEMPLO-4 | |
-| 5 | Pedro | 05/05/2021 | 345.67 | Opção 5 | EXEMPLO-5 | |
+| id | nome | registro | salario | tipo_de_documento | documento | endereco | telefones |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | João da Silva | 01/01/2021 | 1000.01 | cpf | 123.456.789-00 | ITEM-END-1 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+| 2 | Maria da Silva | 01/01/2021 | 999.99 | cnpj | 12.345.678/0001-00 | ITEM-END-2 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+| 3 | José da Silva | 01/01/2021 | 999.99 | rg | 12.345.678-9 | ITEM-END-3 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+
+
+
 
 
 
