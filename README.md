@@ -87,7 +87,7 @@
 - Nome (ref: `nome`): Texto
 - Registro (ref: `registro`)  : Calendário
 - Salário (ref: `salario`)  : Número
-- Tipo de documento (ref: `tipo_de_documento`)  : Seleção única
+- Tipo Doc. (ref: `tipo_doc`)  : Seleção única
   - CPF (value: `cpf`)
   - CNPJ (value: `cnpj`)
   - R.G. (value: `rg`)
@@ -96,11 +96,11 @@
 - Telefones (ref: `telefones`)  : Relacionamento Multi
 
 ### Exemplo de arquivo `.xlsx`
-| id | nome | registro | salario | tipo_de_documento | documento | endereco | telefones |
+| id | nome | registro | salario | tipo_doc | documento | endereco | telefones |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | João da Silva | 01/01/2021 | 1000.01 | cpf | 123.456.789-00 | ITEM-END-1 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
-| 2 | Maria da Silva | 01/01/2021 | 999.99 | cnpj | 12.345.678/0001-00 | ITEM-END-2 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
-| 3 | José da Silva | 01/01/2021 | 999.99 | rg | 12.345.678-9 | ITEM-END-3 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+| 1 | João | 01/01/2021 | 1000.01 | cpf | 123.456.789-00 | ITEM-END-1 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+| 2 | Maria | 01/01/2021 | 999.99 | cnpj | 12.345.678/0001-00 | ITEM-END-2 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+| 3 | José | 01/01/2021 | 999.99 | rg | 12.345.678-9 | ITEM-END-3 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
 
 
 
