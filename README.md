@@ -3,9 +3,9 @@
 ## Automação n8n para responder formulários EnSpace em lote.
 
 ### Como usar
-1. Baixe o [n8n](https://drive.google.com/file/d/1wEh4zD1b4WhE-fZurRlPBQOLXHT8STGB/view?usp=drive_link) e extraia o arquivo `n8n.rar`.
-2. Acesse a pasta `n8n` e execute o arquivo `n8n.exe` aguarde iniciar.
-3. Copie este repositório e cole na pasta `data` em seu n8n. (Caso não exista, crie uma pasta `data` na raiz do n8n).
+1. Baixe o [n8n](https://drive.google.com/file/d/1wEh4zD1b4WhE-fZurRlPBQOLXHT8STGB/view?usp=drive_link) e extraia o arquivo.
+2. Acesse a pasta e execute o arquivo `n8n.exe` aguarde iniciar.
+3. Copie este repositório e cole na pasta `data` em seu n8n. (Mantenha o nome da pasta)
 4. Na pasta Input, coloque o arquivo `.xlsx` com os dados dos formulários a serem respondidos. 
 5. Renomeie o arquivo `config.json.example` para `config.json`.
 6. Preencha o arquivo `config.json` com os dados necessários.
@@ -23,6 +23,20 @@
 - `form_id`: ID do formulário a ser respondido
 - `request_email`: E-mail do usuário que irá responder os formulários.
 - `inputDateFormat`: Formato da data usado no arquivo `.xlsx`. (Ex: `dd/MM/yyyy`, `MM/dd/yyyy`, `yyyy-MM-dd`)
+
+#### Instruções para Formato de Data
+- `dd`: Dia com 2 dígitos
+- `MM`: Mês com 2 dígitos
+- `yyyy`: Ano com 4 dígitos
+- `HH`: Hora com 2 dígitos
+- `mm`: Minuto com 2 dígitos
+- `ss`: Segundo com 2 dígitos
+
+##### Exemplos de Formato de Data / Hora
+- `dd/MM/yyyy`: 30/01/2021
+- `MM/dd/yyyy`: 01/30/2021
+- `yyyy-MM-dd`: 2021-01-30
+- `dd/MM/yyyy HH:mm:ss`: 30/01/2021 00:00:00
 
 ### Tipos de campos suportados e formato de entrada
 - Texto, Texto longo
@@ -102,6 +116,7 @@
 | 1 | João | 01/01/2021 | 1000.01 | cpf | 123.456.789-00 | ITEM-END-1 | ITEM-TEL-1, ITEM-TEL-3 |
 | 2 | Maria | 01/01/2021 | 999.99 | cnpj | 12.345.678/0001-00 | ITEM-END-2 | ITEM-TEL-3 |
 | 3 | José | 01/01/2021 | 999.99 | rg | 12.345.678-9 | ITEM-END-3 | ITEM-TEL-1, ITEM-TEL-3 |
+
 
 
 
