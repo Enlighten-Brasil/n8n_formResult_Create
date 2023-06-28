@@ -1,6 +1,6 @@
 # Resposta de Formularios EnSpace [LOTE]
 
-## Automação n8n para responder formulários EnSpace em lote.
+## Automação n8n para responder formulário EnSpace em lote.
 
 ### Como usar
 1. Baixe o [n8n](https://drive.google.com/file/d/1wEh4zD1b4WhE-fZurRlPBQOLXHT8STGB/view?usp=drive_link) e extraia o arquivo. (Pule para o passo 3 caso já tenha o n8n)
