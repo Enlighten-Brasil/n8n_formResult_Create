@@ -27,7 +27,7 @@
     },
     {
       "parameters": {
-        "filePath": "=./data/{{ $workflow.name }}/config.json"
+        "filePath": "=./data/n8n_formResult_Create-main/config.json"
       },
       "id": "c2dc3991-83f4-4fe8-b27b-ec5d5c57ecf0",
       "name": "Carregar Config",
@@ -40,7 +40,7 @@
     },
     {
       "parameters": {
-        "filePath": "=./data/{{ $workflow.name }}/input/{{ $('Configuração').item.json.inputFilePath }}",
+        "filePath": "=./data/n8n_formResult_Create-main/input/{{ $('Configuração').item.json.inputFilePath }}",
         "dataPropertyName": "=data"
       },
       "id": "9ab43394-8e17-4435-a190-a3fbdbc44098",
@@ -145,7 +145,7 @@
     },
     {
       "parameters": {
-        "fileName": "=./data/{{ $workflow.name }}/output/{{ $now.toUnixInteger() }}_{{ $('Carregar Input').item.binary.data.fileName }}",
+        "fileName": "=./data/n8n_formResult_Create-main/output/{{ $now.toUnixInteger() }}_{{ $('Carregar Input').item.binary.data.fileName }}",
         "options": {
           "append": true
         }
