@@ -3,14 +3,15 @@
 ## Automação n8n para responder formulários EnSpace em lote.
 
 ### Como usar
-1. Copie este repositório e cole na pasta `data` em seu n8n. (Caso não exista, crie uma pasta `data` na raiz do n8n).
-2. Na pasta Input, coloque o arquivo `.xlsx` com os dados dos formulários a serem respondidos. 
-3. Renomeie o arquivo `config.json.example` para `config.json`.
-4. Preencha o arquivo `config.json` com os dados necessários.
-5. Abra o n8n e importe o arquivo `workflow.json` para o seu n8n.
-6. Execute o workflow.
-8. Ao final, na pasta Output será gerado um arquivo `.xlsx` com a relação de formulários respondidos.
-
+1. Baixe o [n8n](https://drive.google.com/file/d/1wEh4zD1b4WhE-fZurRlPBQOLXHT8STGB/view?usp=drive_link) e extraia o arquivo `n8n.rar`.
+2. Acesse a pasta `n8n` e execute o arquivo `n8n.exe` aguarde iniciar.
+3. Copie este repositório e cole na pasta `data` em seu n8n. (Caso não exista, crie uma pasta `data` na raiz do n8n).
+4. Na pasta Input, coloque o arquivo `.xlsx` com os dados dos formulários a serem respondidos. 
+5. Renomeie o arquivo `config.json.example` para `config.json`.
+6. Preencha o arquivo `config.json` com os dados necessários.
+7. Abra o n8n e importe o arquivo `workflow.json` para o seu n8n.
+8. Execute o workflow.
+9. Ao final, na pasta Output será gerado um arquivo `.xlsx` com a relação de formulários respondidos.
 
 ### Detalhes do arquivo `config.json`
 - `apiUrl`: URL da API EnSpace. (Ex: `https://api.stage.enspace.io`).
@@ -98,9 +99,9 @@
 ### Exemplo de arquivo `.xlsx`
 | id | nome | registro | salario | tipo_doc | documento | endereco | telefones |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | João | 01/01/2021 | 1000.01 | cpf | 123.456.789-00 | ITEM-END-1 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
-| 2 | Maria | 01/01/2021 | 999.99 | cnpj | 12.345.678/0001-00 | ITEM-END-2 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
-| 3 | José | 01/01/2021 | 999.99 | rg | 12.345.678-9 | ITEM-END-3 | ITEM-TEL-1, ITEM-TEL-2, ITEM-TEL-3 |
+| 1 | João | 01/01/2021 | 1000.01 | cpf | 123.456.789-00 | ITEM-END-1 | ITEM-TEL-1, ITEM-TEL-3 |
+| 2 | Maria | 01/01/2021 | 999.99 | cnpj | 12.345.678/0001-00 | ITEM-END-2 | ITEM-TEL-3 |
+| 3 | José | 01/01/2021 | 999.99 | rg | 12.345.678-9 | ITEM-END-3 | ITEM-TEL-1, ITEM-TEL-3 |
 
 
 
